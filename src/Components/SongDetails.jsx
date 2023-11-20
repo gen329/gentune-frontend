@@ -34,12 +34,12 @@ function SongDetails() {
   }
 
   if (!song) {
-    return <div>LOADING...</div>;
+    return <div className='loading-icon'>LOADING...</div>;
   }
 
   return (
-    <article>
-      <h1>SONG DETAILS</h1>
+    <article className='details'>
+      <h1 className='h1'>SONG DETAILS</h1>
       <h2>{song.title}</h2>
       <p>Artist: {song.artist_name}</p>
       <p>Album: {song.album}</p>

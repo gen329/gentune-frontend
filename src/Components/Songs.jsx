@@ -14,7 +14,7 @@ function Songs() {
   }, []);
 
   return (
-    <div className="songs">
+    <body>
       <section>
         <table>
           <thead>
@@ -26,7 +26,7 @@ function Songs() {
           </tbody>
         </table>
       </section>
-    </div>
+    </body>
   );
 }
 

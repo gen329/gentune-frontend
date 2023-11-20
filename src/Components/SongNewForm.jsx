@@ -29,6 +29,10 @@ function SongNewForm() {
   };
 
   const handleTextChange = (event) => {
+    setSong({...song, [event.target.id]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     addSong();
   };
@@ -36,9 +40,9 @@ function SongNewForm() {
   return (
     <div className='newSong'>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Song Title:</label>
+        <label htmlFor="name">Song Title:</label>
         <input
-          id="title"
+          id="name"
           value={song.title}
           type="text"
           onChange={handleTextChange}
