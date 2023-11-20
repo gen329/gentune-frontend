@@ -47,7 +47,7 @@ function SongEditForm() {
     .catch((error) => console.error(error));
   }, [id]);
 
-  const handleSibmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     updatedSong();
   };
