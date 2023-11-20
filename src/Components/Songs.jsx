@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Songs from "./Song";
+import Song from "./Song";
 
 const API = import.meta.env.VITE_API_URL;
 
