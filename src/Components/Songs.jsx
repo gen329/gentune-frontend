@@ -14,7 +14,7 @@ function Songs() {
   }, []);
 
   return (
-    <body>
+    <body className="container">
       <section>
         <table>
           <thead>
