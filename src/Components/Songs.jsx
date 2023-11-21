@@ -14,11 +14,10 @@ function Songs() {
   }, []);
 
   return (
-    <body className="container">
+    <div className="container">
       <section>
         <table>
-          <thead>
-          </thead>
+          <thead>{/* Your table headers go here */}</thead>
           <tbody>
             {songs.map((song) => (
               <Song key={song.id} song={song} />
@@ -26,7 +25,7 @@ function Songs() {
           </tbody>
         </table>
       </section>
-    </body>
+    </div>
   );
 }
 

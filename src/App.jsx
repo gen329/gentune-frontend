@@ -8,7 +8,7 @@ import New from "./Pages/New";
 import Show from "./Pages/Show";
 import SongDetails from "./Components/SongDetails";
 
-import Navbar from "./Components/Navbar";
+import Navbar from "./common/Navbar";
 
 function App() {
   return (

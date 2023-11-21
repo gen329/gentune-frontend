@@ -1,6 +1,6 @@
 const API = import.meta.env.VITE_API_URL
 
-const getSong = () => {
+const getSong = () => {}
 
 const getSearchResults = (query) => {
   return fetch(`${API}/songs`)
