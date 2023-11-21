@@ -17,7 +17,13 @@ function Songs() {
     <div className="container">
       <section>
         <table>
-          <thead>{/* Your table headers go here */}</thead>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Artist</th>
+              {/* Add additional table headers */}
+            </tr>
+          </thead>
           <tbody>
             {songs.map((song) => (
               <Song key={song.id} song={song} />
