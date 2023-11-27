@@ -1,26 +1,26 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './common/Navbar';
+import Home from './Pages/Home'; 
+import Index from './Pages/Index'; 
+import New from './Pages/New'; 
+import Show from './Pages/Show'; 
+import Edit from './Pages/Edit'; 
+import FourOFour from './Pages/FourOFour'; 
+import Searchbar from './Components/Searchbar'; 
 
-import Edit from "./Pages/Edit";
-import FourOFour from "./Pages/FourOFour";
-import Home from "./Pages/Home";
-import Index from "./Pages/Index";
-import New from "./Pages/New";
-import Show from "./Pages/Show";
-import SongDetails from "./Components/SongDetails";
-
-import Navbar from "./common/Navbar";
-
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Router>
         <Navbar />
-        <main>
+        <main className='w-screen'>
+          <Searchbar /> 
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/songs" element={<Index />} />
-            <Route path="/songs/new" element={<New />} /> 
-            <Route path="/songs/:id" element={<Show />} component={<SongDetails />} />
+            <Route path="/songs/new" element={<New />} />
+            <Route path="/songs/:id" element={<Show />} />
             <Route path="/songs/:id/edit" element={<Edit />} />
             <Route path="*" element={<FourOFour />} />
           </Routes>

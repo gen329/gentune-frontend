@@ -38,22 +38,23 @@ function SongDetails() {
   }
 
   return (
-    <article className='details'>
+    
+    <article className='flex flex-col w-screen justify-center items-center'>
       <h1 className='h1'>SONG DETAILS</h1>
-      <h2>{song.title}</h2>
-      <p>Artist: {song.artist_name}</p>
-      <p>Album: {song.album}</p>
-      <p>Year: {song.year_of_release}</p>
-      <div>
-        <button className='back-button'>
-          <Link to={`/songs`}>Song Library</Link>
+      <h2 className='song-title'>Title: {song.title}</h2>
+      <p className='song-artist'> Artist: {song.artist_name}</p>
+      <p className='song-album'>Album: {song.album}</p>
+      <p className='song-year'>Year: {song.year_of_release}</p>
+      <div className='mt-2'>
+        <button className='border'>
+          <Link to={`/songs`} className='details-link'>Song Library</Link>
         </button>
         <br />
-        <button className='edit-button'>
-          <Link to={`/songs/${id}/edit`}>Edit Song Info</Link>
+        <button className='border'>
+          <Link to={`/songs/${id}/edit`} className='details-link'>Edit Song Info</Link>
         </button>
         <br />
-        <button onClick={handleDelete}>DELETE SONG</button>
+        <button onClick={handleDelete} className='delete-button'>DELETE SONG</button>
       </div>
     </article>
   );

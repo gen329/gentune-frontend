@@ -1,58 +1,82 @@
-import { useState } from 'react';
-import { getSearchResults } from '../common/helper';
+import React, { useState, useEffect } from 'react';
+import getSearchResults from '../common/helper';
 
 const Searchbar = ({ updateResultState }) => {
-  const [searchQuery, updateSearchQuery] = useState('')
-  const [errorFound, updateErrorFound] = useState({
+  const [searchQuery, updateSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [resultState, setResultState] = useState([]);
+  const [errorFound, setErrorFound] = useState({
     isError: false,
     errorCode: 0
-  })
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (updateResultState) {
+  useEffect(() => {
+    if (searchQuery.trim() !== '') {
+      setLoading(true);
       getSearchResults(searchQuery)
         .then((response) => {
-          if (typeof response != "number") {
-            updateResultState(response)
+          if (typeof response !== 'number') {
+            setResultState(response);
+            setLoading(false);
           } else {
-            updateErrorFound({
+            setErrorFound({
               isError: true,
               errorCode: response
-            })
+            });
+            setLoading(false);
           }
         })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
     } else {
-      console.error("Result state not valid")
+      setResultState([]); 
     }
-  }
+  }, [searchQuery]);
 
-  const handleTextChange = (event) => {
-    updateSearchQuery(e.target.value)
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleTextChange = (e) => {
+    updateSearchQuery(e.target.value);
+  };
 
   return (
-    <div className='searchbar'>
-      <form onSubmit={handleSubmit}>
+    <div className='searchbar-container'>
+      <form onSubmit={handleSubmit} className='search-form'>
         <input
           type="text"
           value={searchQuery}
           onChange={handleTextChange}
           placeholder='search'
-          required />
-          <input type='submit' value="🔎"/>
+          required
+          className='search-input'
+        />
+        <input type='submit' value="🔎" className='search-submit'/>
       </form>
       <br />
-        {errorFound.isError ? (
-          <>
-          <div className='error'>
-            <h1>An error has occured!</h1>
-            <h2>Error Code: {errorFound.errorCode}</h2>
-          </div>
-          </>
-        ): null}
+      {loading ? (
+        <div className='loading'>Loading...</div>
+      ) : errorFound.isError ? (
+        <div className='error'>
+          <h1>An error has occurred!</h1>
+          <h2>Error Code: {errorFound.errorCode}</h2>
+        </div>
+      ) : Array.isArray(resultState) && resultState.length > 0 ? (
+        <div className='search-results'>
+          <ul>
+            {resultState.map((result, index) => (
+              <li key={index}>{result}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div className='no-results'>No results found</div>
+      )}
     </div>
   );
-}
+};
 
 export default Searchbar;

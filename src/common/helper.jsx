@@ -1,28 +1,40 @@
-const API = import.meta.env.VITE_API_URL
+import { useState, useEffect } from 'react';
 
-const getSong = () => {}
+const API = import.meta.env.VITE_API_URL;
 
-const getSearchResults = (query) => {
-  return fetch(`${API}/songs`)
-  .then(res => {
-    let code = res.status
-    if(code == 200){
-      return res.json()
-    } else {
-      return code
-    }
-  })
-  .then(json => {
-    if(typeof json != "number") {
-      return json.items
-    } else {
-      return json
-    }
-  })
-  .catch(error => console.error(error))
-}
+export const getSearchResults = (query) => {
+  const [resultState, updateResultState] = useState([]);
+  const [errorFound, updateErrorFound] = useState({
+    isError: false,
+    errorCode: 0
+  });
 
-export {
-  getSong,
-  getSearchResults
-}
+  useEffect(() => {
+    fetch(`${API}/songs`)
+      .then((res) => {
+        let code = res.status;
+        if (code === 200) {
+          return res.json();
+        } else {
+          return code;
+        }
+      })
+      .then((json) => {
+        if (typeof json !== 'number') {
+          updateResultState(json.items);
+        } else {
+          updateErrorFound({
+            isError: true,
+            errorCode: json
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [query]);
+
+  return { resultState, errorFound };
+};
+
+export default getSearchResults;
