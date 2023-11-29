@@ -41,7 +41,6 @@ function SongNewForm() {
         throw new Error('Network response was not ok.');
       })
       .then((data) => {
-        console.log('Response from server:', data);
         alert(`${data.title} successfully added to database!`);
         navigate('/songs');
       })
