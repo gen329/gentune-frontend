@@ -10,7 +10,7 @@ function Songs() {
     fetch(`${API}/songs`)
     .then((response) => response.json())
     .then((data) => setSongs(data.data.payload))
-    .catch((error) => console.error(error, "Did not fetch movies"));
+    .catch((error) => console.error(error, "Did not fetch songs"));
   }, []);
 
   return (
