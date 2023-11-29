@@ -19,8 +19,7 @@ function Songs() {
         <table className="song-table">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Artist</th>
+              <th>ALL SONGS</th>
             </tr>
           </thead>
           <tbody>
