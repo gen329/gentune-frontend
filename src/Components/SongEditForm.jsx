@@ -12,7 +12,7 @@ function SongEditForm() {
     artist_name: "",
     album: "",
     genre: [],
-    year_of_realease: 0,
+    year_of_release: 0,
     is_favorite: false,
   });
 
@@ -23,8 +23,8 @@ function SongEditForm() {
     useEffect(() => {
       fetch(`${API}/songs/${id}`)
         .then(response => response.json())
-        .then(song => {
-          setSong(song)
+        .then(fetchedSong => {
+          setSong(fetchedSong)
         })
         .catch(() => navigate("/not-found"))
     }, [id, navigate]);
@@ -54,35 +54,35 @@ function SongEditForm() {
   return (
     <div className='Edit'>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Song Title:</label>
+        <label htmlFor="title">Song Title:</label>
         <input
           id="title"
           value={song.title}
           type="text"
           onChange={handleTextChange}
         />
-        <label htmlFor="name">Artist Name:</label>
+        <label htmlFor="artist_name">Artist Name:</label>
         <input
           id="name"
-          value={song.artist}
+          value={song.artist_name}
           type="text"
           onChange={handleTextChange}
         />
-        <label htmlFor="name">Album:</label>
+        <label htmlFor="album_name">Album:</label>
         <input
           id="album"
           value={song.album}
           type="text"
           onChange={handleTextChange}
         />
-        <label htmlFor="name">Year of Release:</label>
+        <label htmlFor="year">Year of Release:</label>
         <input
           id="yearOfRelease"
           value={song.year_of_realease}
           type="number"
           onChange={handleTextChange}
         />
-        <label htmlFor="name">Song Genre:</label>
+        <label htmlFor="genre">Song Genre:</label>
         <input
           id="genre"
           value={song.genre}
