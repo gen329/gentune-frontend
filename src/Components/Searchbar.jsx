@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import getSearchResults from '../common/helper';
+import { useNavigate, useParams } from 'react-router-dom'; 
+const API = import.meta.env.VITE_API_URL;
 
-const Searchbar = ({ updateResultState }) => {
-  const [searchQuery, updateSearchQuery] = useState('');
+const Searchbar = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const [resultState, setResultState] = useState([]);
-  const [errorFound, setErrorFound] = useState({
-    isError: false,
-    errorCode: 0
-  });
+  const [resultState, setResultState] = useState(null);
+  const [errorFound, setErrorFound] = useState({ isError: false, errorCode: 0 });
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    if (searchQuery.trim() !== '') {
+ const fetchData = async () => {
+      if (searchQuery.trim() === '') {
+        setResultState(null);
+        return;
+      }
+
       setLoading(true);
-      getSearchResults(searchQuery)
-        .then((response) => {
-          if (typeof response !== 'number') {
-            setResultState(response);
-            setLoading(false);
-          } else {
-            setErrorFound({
-              isError: true,
-              errorCode: response
-            });
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          setLoading(false);
-        });
-    } else {
-      setResultState([]); 
-    }
+      try {
+        const response = await fetch(`${API}/songs/search?query=${searchQuery}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to fetch data');
+        }
+
+        setResultState(data);
+        setErrorFound({ isError: false, errorCode: 0 });
+      } catch (error) {
+        console.error(error);
+        setErrorFound({ isError: true, errorCode: error.message || 'Unknown Error' });
+        setResultState([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+	fetchData();
   }, [searchQuery]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+	navigate(`${API}/song/${id}`)
   };
 
   const handleTextChange = (e) => {
-    updateSearchQuery(e.target.value);
+    setSearchQuery(e.target.value);
   };
+
 
   return (
     <div className='searchbar-container'>
@@ -50,11 +57,11 @@ const Searchbar = ({ updateResultState }) => {
           type="text"
           value={searchQuery}
           onChange={handleTextChange}
-          placeholder='search'
+          placeholder='Search'
           required
           className='search-input'
         />
-        <input type='submit' value="🔎" className='search-submit'/>
+        <button type='submit' className='search-submit'>🔎</button>
       </form>
       <br />
       {loading ? (
@@ -64,11 +71,15 @@ const Searchbar = ({ updateResultState }) => {
           <h1>An error has occurred!</h1>
           <h2>Error Code: {errorFound.errorCode}</h2>
         </div>
-      ) : Array.isArray(resultState) && resultState.length > 0 ? (
+      ) : resultState === null ? (
+        <div className='no-results'></div>
+      ) : resultState.length > 0 ? (
         <div className='search-results'>
           <ul>
-            {resultState.map((result, index) => (
-              <li key={index}>{result}</li>
+            {resultState.map((result, id) => (
+              <li key={id} onClick={() => navigate(song.id)}>
+                {song.title}
+              </li>
             ))}
           </ul>
         </div>

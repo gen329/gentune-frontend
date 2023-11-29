@@ -14,13 +14,13 @@ function Songs() {
   }, []);
 
   return (
-    <div className="flex flex-row" >
+    <div className="container" >
       <section className="ls-wrapper">
         <table className="song-table">
           <thead>
             <tr>
-              <th className="song-table-header">Title</th>
-              <th className="song-table-header">Artist</th>
+              <th>Title</th>
+              <th>Artist</th>
             </tr>
           </thead>
           <tbody>
