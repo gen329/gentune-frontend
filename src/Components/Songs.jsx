@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import Song from "./Song";
 
-const API = import.meta.env.VITE_API_URL;
-
 function Songs() {
   const [songs, setSongs] = useState([]);
+  const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetch(`${API}/songs`)
+    console.log(`${API}`)
     .then((response) => response.json())
     .then((data) => setSongs(data.data.payload))
     .catch((error) => console.error(error, "Did not fetch songs"));
