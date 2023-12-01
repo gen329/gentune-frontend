@@ -7,11 +7,15 @@ function Songs() {
 
   useEffect(() => {
     fetch(`${API}/songs`)
-    console.log(`${API}`)
-    .then((response) => response.json())
-    .then((data) => setSongs(data.data.payload))
-    .catch((error) => console.error(error, "Did not fetch songs"));
-  }, []);
+    .then((response) => {
+      if (!response.ok {
+        throw new Error('Network response unsuccessful.');
+      }
+      return response.json();
+    })
+    .then((data) => setSongs(data.data.paylod))
+    .catch((error) => console.error("Did not fetch songs", error));
+  }, [API]);
 
   return (
     <div className="container" >
