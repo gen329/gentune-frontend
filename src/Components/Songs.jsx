@@ -8,7 +8,7 @@ function Songs() {
   useEffect(() => {
     fetch(`${API}/songs`)
     .then((response) => {
-      if (!response.ok {
+      if (!response.ok) {
         throw new Error('Network response unsuccessful.');
       }
       return response.json();
