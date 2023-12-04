@@ -29,3 +29,6 @@ Credits
 GenTune is built using React for the front-end and Node.js with Express.js for the back-end.
 
 Links:
+- Netlify Link: https://teal-paletas-20adef.netlify.app
+- Github FrontEnd:https://github.com/gen329/gentune-frontend
+- Github BackEnd: https://github.com/gen329/gentune-backend
