@@ -7,18 +7,18 @@ function Songs() {
 
   useEffect(() => {
     fetch(`${API}/songs`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Network response unsuccessful.');
-      }
-      return response.json();
-    })
-    .then((data) => setSongs(data.data.paylod))
-    .catch((error) => console.error("Did not fetch songs", error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setSongs(data.data.payload))
+      .catch((error) => console.error('Error fetching songs:', error));
   }, [API]);
 
   return (
-    <div className="container" >
+    <div className="container">
       <section className="ls-wrapper">
         <table className="song-table">
           <thead>
@@ -27,9 +27,13 @@ function Songs() {
             </tr>
           </thead>
           <tbody>
-            {songs.map((song) => (
-              <Song key={song.id} song={song} />
-            ))}
+            {songs && songs.length > 0 ? (
+              songs.map((song) => <Song key={song.id} song={song} />)
+            ) : (
+              <tr>
+                <td>{songs ? 'No songs available' : 'Loading...'}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </section>
